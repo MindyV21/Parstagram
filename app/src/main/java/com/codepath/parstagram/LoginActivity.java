@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick sign up button");
+                signUpUser();
             }
         });
     }
@@ -80,6 +81,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void signUpUser() {
+        Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
         finish();
     }
