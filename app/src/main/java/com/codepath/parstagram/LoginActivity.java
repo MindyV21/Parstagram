@@ -51,13 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
-//        tvSignUp = binding.tvSignUp;
-//        tvSignUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "onClick sign up button");
-//            }
-//        });
+        tvSignUp = binding.tvSignUp;
+        tvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick sign up button");
+            }
+        });
     }
 
     private void loginUser(String username, String password) {
