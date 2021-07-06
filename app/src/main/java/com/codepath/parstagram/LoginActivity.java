@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.parstagram.databinding.ActivityLoginBinding;
@@ -24,14 +25,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private TextView tvSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        setContentView(R.layout.activity_login);
+        setContentView(view);
 
+        // if a user is already logged in
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
@@ -48,6 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+//        tvSignUp = binding.tvSignUp;
+//        tvSignUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "onClick sign up button");
+//            }
+//        });
     }
 
     private void loginUser(String username, String password) {
