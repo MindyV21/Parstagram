@@ -15,6 +15,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -52,7 +53,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        queryPosts();
+//        queryPosts();
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String desciption = etDescription.getText().toString();
+                if (desciption.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(desciption, currentUser);
+            }
+        });
+    }
+
+    private void savePost(String desciption, ParseUser currentUser) {
+        Post post = new Post();
+        post.setDescription(desciption);
+//        post.setImage()
+        post.setUser(currentUser);
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(MainActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Log.i(TAG, "Post save was successful!!");
+                etDescription.setText("");
+            }
+        });
     }
 
     private void queryPosts() {
