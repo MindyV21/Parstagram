@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codepath.parstagram.databinding.ActivitySignUpBinding;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -38,8 +39,16 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick create account button");
+                String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String confirmPassword = etConfirmPassword.getText().toString();
+
+                // check that all fields are not empty
+                if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    Log.i(TAG, "Empty fields");
+                    Toast.makeText(SignUpActivity.this, "Empty fields!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // check if password typed in correctly
                 if (!password.equals(confirmPassword)) {
@@ -69,6 +78,24 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
+                    Log.e(TAG, "Issue with login", e);
+                    Toast.makeText(SignUpActivity.this, "Issue with sign up!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                loginUser(username, password);
+                Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loginUser(String username, String password) {
+        Log.i(TAG, "Attempting to login user " + username);
+        // TODO: navigate to main activity if user signed in properly
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    // TODO: better error handling
                     Log.e(TAG, "Issue with login", e);
                     Toast.makeText(SignUpActivity.this, "Issue with login!", Toast.LENGTH_SHORT).show();
                     return;

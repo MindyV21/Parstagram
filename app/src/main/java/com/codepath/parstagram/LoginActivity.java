@@ -48,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+
+                // check that all fields are not empty
+                if (username.isEmpty() || password.isEmpty()) {
+                    Log.i(TAG, "Empty fields");
+                    Toast.makeText(LoginActivity.this, "Empty fields!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 loginUser(username, password);
             }
         });
