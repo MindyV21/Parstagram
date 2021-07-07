@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class PostsFragment extends Fragment {
 
     FragmentPostsBinding binding;
     protected PostsAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     protected List<Post> allPosts;
 
@@ -90,6 +92,7 @@ public class PostsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        swipeContainer = binding.swipeContainer;
         rvPosts = binding.rvPosts;
 
         allPosts = new ArrayList<>();
@@ -97,7 +100,42 @@ public class PostsFragment extends Fragment {
         rvPosts.setAdapter(adapter);
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "Refresh called");
+                fetchTimelineAsync(0);
+            }
+        });
+
         queryPosts();
+    }
+
+    private void fetchTimelineAsync(int page) {
+        // send network request to fetch updated date
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with refreshing posts", e);
+                    return;
+                }
+
+                Log.d(TAG, "onSuccess retrieved new timeline");
+                // clear out all home timeline
+                adapter.clear();
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username " + post.getUser().getUsername());
+                }
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+            }
+        });
     }
 
     protected void queryPosts() {
