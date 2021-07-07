@@ -2,6 +2,7 @@ package com.codepath.parstagram;
 
 import android.app.Application;
 
+import com.codepath.parstagram.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

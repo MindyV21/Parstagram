@@ -13,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.codepath.parstagram.Post;
-import com.codepath.parstagram.R;
+import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.adapters.PostsAdapter;
-import com.codepath.parstagram.databinding.FragmentComposeBinding;
 import com.codepath.parstagram.databinding.FragmentPostsBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -35,9 +33,9 @@ public class PostsFragment extends Fragment {
     public static final String TAG = "PostFragment";
 
     FragmentPostsBinding binding;
-    private PostsAdapter adapter;
+    protected PostsAdapter adapter;
     private RecyclerView rvPosts;
-    private List<Post> allPosts;
+    protected List<Post> allPosts;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,11 +100,12 @@ public class PostsFragment extends Fragment {
         queryPosts();
     }
 
-    private void queryPosts() {
+    protected void queryPosts() {
         // specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
         // get a list of all posts objects from database
         query.findInBackground(new FindCallback<Post>() {
             @Override

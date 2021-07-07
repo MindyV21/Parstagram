@@ -22,20 +22,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.codepath.parstagram.MainActivity;
-import com.codepath.parstagram.Post;
-import com.codepath.parstagram.R;
-import com.codepath.parstagram.databinding.ActivityMainBinding;
+import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.databinding.FragmentComposeBinding;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
