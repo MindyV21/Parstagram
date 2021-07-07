@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                     default:
-                        // TODO: update fragment
                         fragment = new ProfileFragment();
                         break;
                 }
@@ -76,5 +76,27 @@ public class MainActivity extends AppCompatActivity {
         });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menuLogout) {
+            Log.i(TAG, "User logged out");
+            ParseUser.logOut();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            Toast.makeText(this, "User logged out!", Toast.LENGTH_SHORT).show();
+            finish();
+
+            // to consume menu item
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

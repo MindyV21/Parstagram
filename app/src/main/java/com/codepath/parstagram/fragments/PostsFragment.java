@@ -35,7 +35,7 @@ public class PostsFragment extends Fragment {
 
     FragmentPostsBinding binding;
     protected PostsAdapter adapter;
-    private SwipeRefreshLayout swipeContainer;
+    protected SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     protected List<Post> allPosts;
 
@@ -111,7 +111,7 @@ public class PostsFragment extends Fragment {
         queryPosts();
     }
 
-    private void fetchTimelineAsync(int page) {
+    protected void fetchTimelineAsync(int page) {
         // send network request to fetch updated date
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);

@@ -49,7 +49,6 @@ public class ComposeFragment extends Fragment {
     private Button btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
-    private Button btnLogout;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
@@ -115,7 +114,6 @@ public class ComposeFragment extends Fragment {
         btnCaptureImage = binding.btnCaptureImage;
         ivPostImage = binding.ivPostImage;
         btnSubmit = binding.btnSubmit;
-        btnLogout = binding.btnLogout;
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,19 +137,6 @@ public class ComposeFragment extends Fragment {
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(desciption, currentUser, photoFile);
-            }
-        });
-
-        // simple logout to test
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick logout button");
-                ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                Toast.makeText(getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
-                // TODO: make user actually log out when this is clicked
-                //finish();
             }
         });
     }
