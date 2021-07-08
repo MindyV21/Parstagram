@@ -55,7 +55,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "login button clicked!");
                 Toast.makeText(StartActivity.this, "Login!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(StartActivity.this, SignUpActivity.class);
+                Intent i = new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(i);
             }
         });
