@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ public class InstaProfileFragment extends  Fragment{
 
     public static final String TAG = "InstaProfileFragment";
     FragmentInstaProfileBinding binding;
-    FragmentManager fragmentManager = getChildFragmentManager();
 
     ImageView ivProfile;
     TextView tvPostsNum;
@@ -60,21 +60,22 @@ public class InstaProfileFragment extends  Fragment{
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        ivProfile = binding.ivProfileImageActual;
-//        tvPostsNum = binding.tvPostsNum;
-//        tvPostsText = binding.tvPostsText;
-//        tvFollowersNum = binding.tvFollowersNum;
-//        tvFollowersText = binding.tvFollowersText;
-//        tvFollowingNum = binding.tvFollowingNum;
-//        tvFollowingText = binding.tvFollowingText;
-//
-//        tvProfileName = binding.tvProfileName;
-//        tvProfileBody = binding.tvProfileBody;
-//
+        ivProfile = binding.ivProfileImageActual;
+        tvPostsNum = binding.tvPostsNum;
+        tvPostsText = binding.tvPostsText;
+        tvFollowersNum = binding.tvFollowersNum;
+        tvFollowersText = binding.tvFollowersText;
+        tvFollowingNum = binding.tvFollowingNum;
+        tvFollowingText = binding.tvFollowingText;
+
+        tvProfileName = binding.tvProfileName;
+        tvProfileBody = binding.tvProfileBody;
+
         setUpProfile();
 
-        Fragment fragment = new ProfileFragment();
-        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+        Fragment childFragment = new ProfileFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.child_fragment_container, childFragment).commit();
     }
 
     private void setUpProfile() {
