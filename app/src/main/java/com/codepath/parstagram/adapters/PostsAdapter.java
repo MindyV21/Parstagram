@@ -159,14 +159,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         // binds the actions buttons on a post - like, comment, direct, save
         private void bindActions(Post post) {
             // TODO: action buttons of a post
+            Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.ic_heart);
+            ibHeart.setBackground(drawable);
             // if post already liked by user
             ibHeart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(TAG, "heart: user (un)liked this post !");
+                    if (ibHeart.isSelected()) {
+                        Log.i(TAG, "heart: user unliked this post !");
+                        ibHeart.setSelected(false);
+                    } else {
+                        Log.i(TAG, "heart: user liked this post !");
+                        ibHeart.setSelected(true);
+                    }
                 }
             });
 
+            drawable = AppCompatResources.getDrawable(context, R.drawable.ufi_comment);
+            ibComment.setBackground(drawable);
             ibComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,6 +184,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
 
+            drawable = AppCompatResources.getDrawable(context, R.drawable.direct);
+            ibDirect.setBackground(drawable);
             ibDirect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -181,11 +193,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
 
+            drawable = AppCompatResources.getDrawable(context, R.drawable.ic_save);
+            ibSave.setBackground(drawable);
             // if post already saved by user
             ibSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(TAG, "save: user (un)saved this post !");
+                    if (ibSave.isSelected()) {
+                        Log.i(TAG, "save: user unsaved this post !");
+                        ibSave.setSelected(false);
+                    } else {
+                        Log.i(TAG, "save: user saved this post !");
+                        ibSave.setSelected(true);
+                    }
                 }
             });
         }
@@ -217,6 +237,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             });
 
+            Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.ufi_more);
+            ibMore.setBackground(drawable);
             // TODO: set up more options for a post
             ibMore.setOnClickListener(new View.OnClickListener() {
                 @Override

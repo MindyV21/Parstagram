@@ -13,13 +13,14 @@
         android:orientation="horizontal"
         android:layout_margin="8dp">
 
-    <ImageView
-        android:id="@+id/ivProfileImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        tools:srcCompat="@tools:sample/avatars"
-        android:scaleType="centerCrop"
-        android:clickable="true"/>
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            tools:srcCompat="@tools:sample/avatars"
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tvUsername"
@@ -36,11 +37,11 @@
 
         <ImageButton
             android:id="@+id/ibMore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ufi_more"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
             android:layout_alignParentEnd="true"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
 <!--  post image  -->
@@ -63,32 +64,30 @@
 
         <ImageButton
             android:id="@+id/ibHeart"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ic_heart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:scaleType="centerCrop"/>
 
         <ImageButton
             android:id="@+id/ibComment"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ufi_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:scaleType="centerCrop"
-            android:layout_toEndOf="@id/ibHeart"/>
+            android:layout_toEndOf="@id/ibHeart"
+            android:layout_marginStart="5dp"/>
 
         <ImageButton
             android:id="@+id/ibDirect"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ufi_new_direct"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:scaleType="centerCrop"
-            android:layout_toEndOf="@id/ibComment"/>
+            android:layout_toEndOf="@id/ibComment"
+            android:layout_marginStart="5dp"/>
 
         <ImageButton
             android:id="@+id/ibSave"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ufi_save"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:scaleType="centerCrop"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
