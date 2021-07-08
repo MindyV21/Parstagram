@@ -1,30 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvUsername"
+<!--  profile image, username and more option  -->
+    <RelativeLayout
+        android:id="@+id/relLayoutHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:text="mindy" />
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
 
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleType="centerCrop"
+        android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="mndyvart"
+            android:layout_toEndOf="@id/ivProfileImage"
+            android:layout_marginStart="7dp"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:clickable="true"/>
+
+        <ImageButton
+            android:id="@+id/ibMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ufi_more"
+            android:layout_alignParentEnd="true"
+            android:scaleType="centerInside" />
+    </RelativeLayout>
+
+<!--  post image  -->
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         tools:srcCompat="@tools:sample/avatars"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:layout_below="@id/relLayoutHeader"
+        />
 
+<!--  actions for a post  -->
+    <RelativeLayout
+        android:id="@+id/relLayoutActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_margin="8dp">
+
+        <ImageButton
+            android:id="@+id/ibHeart"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_heart"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/ibComment"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ufi_comment"
+            android:scaleType="centerCrop"
+            android:layout_toEndOf="@id/ibHeart"/>
+
+        <ImageButton
+            android:id="@+id/ibDirect"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ufi_new_direct"
+            android:scaleType="centerCrop"
+            android:layout_toEndOf="@id/ibComment"/>
+
+        <ImageButton
+            android:id="@+id/ibSave"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ufi_save"
+            android:scaleType="centerCrop"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+<!--  likes for a post  -->
+    <RelativeLayout
+        android:id="@+id/relLayoutLikes"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/relLayoutActions"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:id="@+id/relLayoutLikesProfiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/ivLikesOne"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                />
+
+            <ImageView
+                android:id="@+id/ivLikesTwo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                android:layout_toEndOf="@id/ivLikesOne"
+                android:layout_marginStart="-8dp"
+                />
+
+            <ImageView
+                android:id="@+id/ivLikesThree"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                android:layout_toEndOf="@id/ivLikesTwo"
+                android:layout_marginStart="-8dp"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvLikedBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/relLayoutLikesProfiles"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="16sp"
+            tools:text="Liked by mndyvart and 1,346 others" />
+
+    </RelativeLayout>
+
+<!--  description of post  -->
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="trying to look hipster"
-        android:layout_marginBottom="8dp"/>
+        android:layout_below="@id/relLayoutLikes"
+        android:layout_margin="8dp"
+        android:maxLines="20"
+        android:ellipsize="end"
+        tools:text="mndyvart This is my description!" />
 
-</LinearLayout>
+<!--  comments stuff  -->
+    <TextView
+        android:id="@+id/tvViewComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDescription"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        tools:text="View all 131 comments" />
+
+<!--  timestamp  -->
+    <TextView
+        android:id="@+id/tvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvViewComments"
+        android:layout_margin="8dp"
+        tools:text="2 hours ago"/>
+
+</RelativeLayout>

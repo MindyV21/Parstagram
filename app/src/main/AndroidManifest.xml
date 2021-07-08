@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Parstagram"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostDetailsActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
