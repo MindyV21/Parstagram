@@ -34,11 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        // if a user is already logged in
-        if (ParseUser.getCurrentUser() != null) {
-            goMainActivity();
-        }
-
         etUsername = binding.etUsername;
         etPassword = binding.etPassword;
         btnLogin = binding.btnLogin;
