@@ -18,6 +18,11 @@ import java.util.List;
 public class ProfilePostsFragment extends PostsFragment {
 
     public static final String TAG = "ProfilePostsFragment";
+    ParseUser user;
+
+    public ProfilePostsFragment(ParseUser user){
+        this.user = user;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class ProfilePostsFragment extends PostsFragment {
         // specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, user);
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
         // get a list of all posts objects from database
@@ -55,7 +60,7 @@ public class ProfilePostsFragment extends PostsFragment {
         // send network request to fetch updated date
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, user);
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {

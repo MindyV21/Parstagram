@@ -35,9 +35,10 @@ public class InstaProfileFragment extends  Fragment{
 
     public static final String TAG = "InstaProfileFragment";
     FragmentInstaProfileBinding binding;
+    ParseUser user;
+    private boolean isCurrentUserProfile;
 
     Toolbar toolbar;
-
 
     ImageView ivProfileImage;
     TextView tvPostsNum;
@@ -52,6 +53,13 @@ public class InstaProfileFragment extends  Fragment{
 
     public InstaProfileFragment() {
         // Required empty public constructor
+        user = ParseUser.getCurrentUser();
+        isCurrentUserProfile = true;
+    }
+
+    public InstaProfileFragment(ParseUser user) {
+        this.user = user;
+        isCurrentUserProfile = false;
     }
 
     // constructor for another user?
@@ -85,7 +93,7 @@ public class InstaProfileFragment extends  Fragment{
 
         setUpProfile();
 
-        Fragment childFragment = new ProfilePostsFragment();
+        Fragment childFragment = new ProfilePostsFragment(user);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.child_fragment_container, childFragment).commit();
     }
@@ -106,26 +114,46 @@ public class InstaProfileFragment extends  Fragment{
             }
         });
 
+        LinearLayout saved = bottomSheetDialog.findViewById(R.id.savedLinearLayout);
+        saved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "User's saved posts!");
+            }
+        });
+
+        LinearLayout profileImage = bottomSheetDialog.findViewById(R.id.profileImageLinearLayout);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "User is changing their profile picture");
+                takeProfilePhoto();
+            }
+        });
+
         bottomSheetDialog.show();
     }
 
+    private void takeProfilePhoto() {
+    }
+
     private void setUpToolbar() {
-        toolbar.setTitle(ParseUser.getCurrentUser().getUsername());
-        toolbar.inflateMenu(R.menu.menu_current_user);
-        toolbar.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_settings:
-                    showBottomSheetDialog();
-                    return true;
-                default:
-                    return false;
-            }
-        });
+        toolbar.setTitle(user.getUsername());
+        if (isCurrentUserProfile) {
+            toolbar.inflateMenu(R.menu.menu_current_user);
+            toolbar.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_settings:
+                        showBottomSheetDialog();
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+        }
     }
 
     private void setUpProfile() {
-        ParseUser user = ParseUser.getCurrentUser();
-
         Drawable drawable;
 
         ParseFile image = user.getParseFile(User.KEY_PROFILE_IMAGE);
