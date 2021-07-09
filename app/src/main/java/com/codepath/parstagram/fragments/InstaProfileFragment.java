@@ -11,17 +11,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.parstagram.R;
 import com.codepath.parstagram.databinding.FragmentInstaProfileBinding;
 import com.codepath.parstagram.models.User;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -29,7 +35,9 @@ public class InstaProfileFragment extends  Fragment{
 
     public static final String TAG = "InstaProfileFragment";
     FragmentInstaProfileBinding binding;
+
     Toolbar toolbar;
+
 
     ImageView ivProfileImage;
     TextView tvPostsNum;
@@ -73,6 +81,8 @@ public class InstaProfileFragment extends  Fragment{
 
         toolbar = binding.toolbar;
 
+        setUpToolbar();
+
         setUpProfile();
 
         Fragment childFragment = new ProfilePostsFragment();
@@ -80,12 +90,42 @@ public class InstaProfileFragment extends  Fragment{
         transaction.replace(R.id.child_fragment_container, childFragment).commit();
     }
 
+    private void showBottomSheetDialog() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_settings);
+
+        LinearLayout logout = bottomSheetDialog.findViewById(R.id.logoutLinearLayout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "User has logged out");
+                ParseUser.logOut();
+                Toast.makeText(getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
+        });
+
+        bottomSheetDialog.show();
+    }
+
+    private void setUpToolbar() {
+        toolbar.setTitle("mndyvart");
+        toolbar.inflateMenu(R.menu.menu_current_user);
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_settings:
+                    showBottomSheetDialog();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+    }
+
     private void setUpProfile() {
         ParseUser user = ParseUser.getCurrentUser();
 
-        // toolbar
         Drawable drawable;
-        toolbar.setTitle("mndyvart");
 
         ParseFile image = user.getParseFile(User.KEY_PROFILE_IMAGE);
         if (image != null) {
