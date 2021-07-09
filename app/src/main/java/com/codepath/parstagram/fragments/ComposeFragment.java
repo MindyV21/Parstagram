@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.codepath.parstagram.R;
@@ -56,6 +57,7 @@ public class ComposeFragment extends Fragment {
     private ImageView ivPostImage;
     private Button btnSubmit;
 
+    private ProgressBar pb;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -126,6 +128,7 @@ public class ComposeFragment extends Fragment {
         btnCaptureImage = binding.btnCaptureImage;
         ivPostImage = binding.ivPostImage;
         btnSubmit = binding.btnSubmit;
+        pb = binding.pbLoading;
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +137,11 @@ public class ComposeFragment extends Fragment {
             }
         });
 
-//        queryPosts();
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String desciption = etDescription.getText().toString();
-                if (desciption.isEmpty()) {
+                String description = etDescription.getText().toString();
+                if (description.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -147,8 +149,13 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // on some click or some loading we need to wait for...
+                pb = binding.pbLoading;
+                pb.setVisibility(ProgressBar.VISIBLE);
+
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(desciption, currentUser, photoFile);
+                savePost(description, currentUser, photoFile);
             }
         });
     }
@@ -213,12 +220,14 @@ public class ComposeFragment extends Fragment {
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
+                pb.setVisibility(ProgressBar.INVISIBLE);
                 if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Log.i(TAG, "Post save was successful!!");
+                Toast.makeText(getContext(), "Post created successfully!", Toast.LENGTH_SHORT).show();
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
             }
