@@ -27,4 +27,26 @@
             android:text="Logout"
             android:textColor="@color/white" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/savedLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ufi_save" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:text="Saved"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>

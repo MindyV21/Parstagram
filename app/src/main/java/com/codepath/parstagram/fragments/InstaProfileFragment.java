@@ -99,6 +99,7 @@ public class InstaProfileFragment extends  Fragment{
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "User has logged out");
+                bottomSheetDialog.dismiss();
                 ParseUser.logOut();
                 Toast.makeText(getContext(), "User logged out!", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
@@ -109,7 +110,7 @@ public class InstaProfileFragment extends  Fragment{
     }
 
     private void setUpToolbar() {
-        toolbar.setTitle("mndyvart");
+        toolbar.setTitle(ParseUser.getCurrentUser().getUsername());
         toolbar.inflateMenu(R.menu.menu_current_user);
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
@@ -151,7 +152,7 @@ public class InstaProfileFragment extends  Fragment{
         tvFollowingText.setText("Following");
         tvFollowingText.setTextColor(Color.BLACK);
 
-        tvProfileName.setText("mindy");
+        tvProfileName.setText(user.getUsername());
         tvProfileName.setTextColor(Color.BLACK);
         tvProfileBody.setText("This is my description!");
         tvProfileBody.setTextColor(Color.BLACK);

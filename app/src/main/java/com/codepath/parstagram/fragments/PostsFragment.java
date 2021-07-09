@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.codepath.parstagram.EndlessRecyclerViewScrollListener;
 import com.codepath.parstagram.R;
 import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.adapters.PostsAdapter;
@@ -46,6 +47,8 @@ public class PostsFragment extends Fragment {
 
     protected Toolbar toolbar;
     private ImageView ivLogo;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -112,7 +115,8 @@ public class PostsFragment extends Fragment {
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(linearLayoutManager);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -122,7 +126,38 @@ public class PostsFragment extends Fragment {
             }
         });
 
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "page: " + page);
+                loadNextDataFromApi(page);
+            }
+        };
+        rvPosts.addOnScrollListener(scrollListener);
+
         queryPosts();
+    }
+
+    private void loadNextDataFromApi(int offset) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setSkip(offset * 20);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with refreshing posts", e);
+                    return;
+                }
+
+                Log.d(TAG, "onSuccess retrieved new timeline");
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+            }
+        });
     }
 
     protected void fetchTimelineAsync(int page) {
