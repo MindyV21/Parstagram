@@ -36,11 +36,22 @@
                     android:background="#FFFFFF"
                     android:backgroundTint="#FFFFFF">
 
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetStart="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="?attr/actionBarSize"
+                        android:background="@drawable/shape_view_border_bottom"
+                        app:titleTextColor="@android:color/black"/>
+
 <!-- profile info - pfp, posts, followers, following -->
                     <RelativeLayout
                         android:id="@+id/relLayoutInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/toolbar"
                         android:layout_margin="20dp">
 
                         <ImageView
@@ -153,9 +164,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvProfileBody"
                         android:layout_margin="20dp"
-                        android:text="Edit Profile"/>
+                        android:text="Edit Profile"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/white"/>
                 </RelativeLayout>
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

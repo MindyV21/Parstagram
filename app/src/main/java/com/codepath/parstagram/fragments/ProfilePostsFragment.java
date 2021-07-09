@@ -1,6 +1,11 @@
 package com.codepath.parstagram.fragments;
 
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.codepath.parstagram.models.Post;
 import com.parse.FindCallback;
@@ -10,9 +15,15 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class ProfileFragment extends PostsFragment {
+public class ProfilePostsFragment extends PostsFragment {
 
-    public static final String TAG = "ProfileFragment";
+    public static final String TAG = "ProfilePostsFragment";
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        toolbar.setVisibility(View.GONE);
+    }
 
     @Override
     protected void queryPosts() {

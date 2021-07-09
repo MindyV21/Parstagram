@@ -31,8 +31,6 @@ public class SignUpActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        getSupportActionBar().hide();
-
         etUsername = binding.etUsername;
         etPassword = binding.etPassword;
         etConfirmPassword = binding.etConfirmPassword;

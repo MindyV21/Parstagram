@@ -30,8 +30,6 @@ public class StartActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        getSupportActionBar().hide();
-
         // if a user is already logged in
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();

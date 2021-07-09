@@ -1,9 +1,12 @@
 package com.codepath.parstagram.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.codepath.parstagram.R;
 import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.adapters.PostsAdapter;
 import com.codepath.parstagram.databinding.FragmentPostsBinding;
@@ -38,6 +43,9 @@ public class PostsFragment extends Fragment {
     protected SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     protected List<Post> allPosts;
+
+    protected Toolbar toolbar;
+    private ImageView ivLogo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,6 +100,12 @@ public class PostsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar = binding.toolbar;
+        Drawable drawable = AppCompatResources.getDrawable(getContext(), R.drawable.nav_logo_whiteout);
+        ivLogo = binding.ivLogo;
+        ivLogo.setImageDrawable(drawable);
+
         swipeContainer = binding.swipeContainer;
         rvPosts = binding.rvPosts;
 

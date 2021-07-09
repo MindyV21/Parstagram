@@ -3,11 +3,14 @@ package com.codepath.parstagram.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.codepath.parstagram.R;
 import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.databinding.FragmentComposeBinding;
 import com.parse.ParseException;
@@ -45,6 +49,8 @@ public class ComposeFragment extends Fragment {
 
     FragmentComposeBinding binding;
 
+    private Toolbar toolbar;
+    private ImageView ivLogo;
     private EditText etDescription;
     private Button btnCaptureImage;
     private ImageView ivPostImage;
@@ -110,6 +116,12 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar = binding.toolbar;
+        Drawable drawable = AppCompatResources.getDrawable(getContext(), R.drawable.nav_logo_whiteout);
+        ivLogo = binding.ivLogo;
+        ivLogo.setImageDrawable(drawable);
+
         etDescription = binding.etDescription;
         btnCaptureImage = binding.btnCaptureImage;
         ivPostImage = binding.ivPostImage;

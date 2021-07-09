@@ -7,11 +7,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,21 +21,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.parstagram.R;
 import com.codepath.parstagram.databinding.FragmentInstaProfileBinding;
-import com.codepath.parstagram.databinding.FragmentPostsBinding;
-import com.codepath.parstagram.models.Post;
 import com.codepath.parstagram.models.User;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class InstaProfileFragment extends  Fragment{
 
     public static final String TAG = "InstaProfileFragment";
     FragmentInstaProfileBinding binding;
+    Toolbar toolbar;
 
     ImageView ivProfileImage;
     TextView tvPostsNum;
@@ -78,9 +71,11 @@ public class InstaProfileFragment extends  Fragment{
         tvProfileName = binding.tvProfileName;
         tvProfileBody = binding.tvProfileBody;
 
+        toolbar = binding.toolbar;
+
         setUpProfile();
 
-        Fragment childFragment = new ProfileFragment();
+        Fragment childFragment = new ProfilePostsFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.child_fragment_container, childFragment).commit();
     }
@@ -88,11 +83,15 @@ public class InstaProfileFragment extends  Fragment{
     private void setUpProfile() {
         ParseUser user = ParseUser.getCurrentUser();
 
+        // toolbar
+        Drawable drawable;
+        toolbar.setTitle("mndyvart");
+
         ParseFile image = user.getParseFile(User.KEY_PROFILE_IMAGE);
         if (image != null) {
             Glide.with(getContext()).load(image.getUrl()).transform(new CircleCrop()).into(ivProfileImage);
         } else {
-            Drawable drawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_profile);
+            drawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_profile);
             ivProfileImage.setImageDrawable(drawable);
         }
 
