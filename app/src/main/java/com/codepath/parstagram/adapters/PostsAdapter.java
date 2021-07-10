@@ -228,9 +228,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "pfp: go to user's profile !");
-                    AppCompatActivity activity = (AppCompatActivity) context;
-                    Fragment myFragment = new InstaProfileFragment(post.getUser());
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, myFragment).addToBackStack(null).commit();
+                    goToUserProfile(post);
                 }
             });
 
@@ -241,6 +239,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "username: go to user's profile !");
+                    goToUserProfile(post);
                 }
             });
 
@@ -253,6 +252,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     Log.i(TAG, "more button clicked !");
                 }
             });
+        }
+
+        private void goToUserProfile(Post post) {
+            AppCompatActivity activity = (AppCompatActivity) context;
+            Fragment myFragment = new InstaProfileFragment(post.getUser());
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, myFragment).addToBackStack(null).commit();
         }
 
         @Override
