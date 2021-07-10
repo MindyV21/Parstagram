@@ -138,7 +138,7 @@ public class PostsFragment extends Fragment {
         queryPosts();
     }
 
-    private void loadNextDataFromApi(int offset) {
+    protected void loadNextDataFromApi(int offset) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setSkip(offset * 20);

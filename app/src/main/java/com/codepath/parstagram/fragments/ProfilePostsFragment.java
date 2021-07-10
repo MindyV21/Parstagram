@@ -83,4 +83,27 @@ public class ProfilePostsFragment extends PostsFragment {
             }
         });
     }
+
+    protected void loadNextDataFromApi(int offset) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.whereEqualTo(Post.KEY_USER, user);
+        query.setSkip(offset * 20);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with refreshing posts", e);
+                    return;
+                }
+
+                Log.d(TAG, "onSuccess retrieved new timeline");
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+    }
 }
