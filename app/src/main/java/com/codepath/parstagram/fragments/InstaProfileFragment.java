@@ -99,6 +99,13 @@ public class InstaProfileFragment extends  Fragment{
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (isCurrentUserProfile) {
+            user = ParseUser.getCurrentUser();
+        } else {
+            this.user = user;
+        }
+
         ivProfileImage = binding.ivProfileImageActual;
         tvPostsNum = binding.tvPostsNum;
         tvPostsText = binding.tvPostsText;
